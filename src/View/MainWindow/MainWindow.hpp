@@ -12,5 +12,5 @@ public:
 
 private:
 
-  std::shared_ptr<MainWidget> m_mainWidget;
+  MainWidget* m_mainWidget;
 };

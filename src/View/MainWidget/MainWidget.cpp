@@ -2,14 +2,16 @@
 
 MainWidget::MainWidget(QWidget* parent) {
 
-	auto path_mainContentLayout = std::make_shared<QHBoxLayout>(this);
-	auto fileTree_fileGridLayout = std::make_shared<QVBoxLayout>(this);
+	auto path_mainContentLayout = new QHBoxLayout(this);
+	auto fileTree_fileGridLayout = new QVBoxLayout(this);
 
-	path_mainContentLayout->addLayout(fileTree_fileGridLayout.get( ));
+	auto gridLayout = new GridItemView(this);
 
-	setLayout(path_mainContentLayout.get( ));
+	fileTree_fileGridLayout->addWidget(gridLayout);
 
-	auto fmc = new FileController( );
+	path_mainContentLayout->addLayout(fileTree_fileGridLayout);
+
+	setLayout(path_mainContentLayout);
 }
 
 MainWidget::~MainWidget( ) { }

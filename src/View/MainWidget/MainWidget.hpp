@@ -3,8 +3,10 @@
 #include <QLayout>
 #include <QLabel>
 #include <QWidget>
+#include <QGridLayout>
 
-#include "../../Controller/FileController/FileController.hpp"
+#include "../Widgets/GridItem/GridItem.hpp"
+#include "../GridItemView/GridItemView.hpp"
 
 class MainWidget : public QWidget {
   Q_OBJECT

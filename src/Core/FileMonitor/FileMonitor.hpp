@@ -1,7 +1,6 @@
 #pragma once
 
 #include <QObject>
-#include <QString>
 #include <chrono>
 #include <filesystem>
 #include <unordered_map>
@@ -13,22 +12,23 @@ class FileMonitor : public QObject {
 public:
   std::chrono::duration<int, std::milli> m_delay;
 
-  FileMonitor(QString path, std::chrono::duration<int, std::milli> delay);
+  FileMonitor(std::filesystem::path path, std::chrono::duration<int, std::milli> delay);
   ~FileMonitor( ) = default;
 
-  void SetPath(QString path) { m_path = path; }
+  void SetPath(std::filesystem::path path) { m_path = path; }
 
 public slots:
   void start( );
   void stop( );
 
 private:
-  std::unordered_map<QString, std::filesystem::file_time_type> m_paths;
+  std::unordered_map<std::filesystem::path, std::filesystem::file_time_type> m_paths;
   bool m_running;
-  QString m_path;
+  std::filesystem::path m_path;
 
-  bool contains(const QString& key);
+  bool contains(const std::filesystem::path& key);
 
 signals:
-  void update(const QString path, const FileEvent);
+  void update(const std::filesystem::path path, const FileEvent);
+  void newPathEntered(const std::unordered_map<std::filesystem::path, std::filesystem::file_time_type> paths);
 };

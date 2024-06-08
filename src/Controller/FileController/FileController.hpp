@@ -18,7 +18,8 @@ private:
 
 private slots:
 
-  void update(const QString path, const FileEvent);
+  void update(const std::filesystem::path path, const FileEvent);
+  void emitNewPath(const std::unordered_map<std::filesystem::path, std::filesystem::file_time_type> paths);
 
 signals:
   // Start signal to start the function in the thread
@@ -26,5 +27,7 @@ signals:
   // Stop signal to stop the function in the thread
   void pause( );
   // Signal to update the path inside the thread
-  void updatePath(const QString&);
+  void updatePath(const std::filesystem::path&);
+
+  void newPathEntered(const std::unordered_map<std::filesystem::path, std::filesystem::file_time_type> paths);
 };
