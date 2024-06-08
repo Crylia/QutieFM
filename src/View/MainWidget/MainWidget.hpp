@@ -1,15 +1,16 @@
 #pragma once
 
 #include <QLayout>
+#include <QLabel>
 #include <QWidget>
-#include <qboxlayout.h>
-#include <qtmetamacros.h>
+
+#include "../../Controller/FileController/FileController.hpp"
 
 class MainWidget : public QWidget {
   Q_OBJECT
 public:
-  MainWidget() = default;
-  ~MainWidget() = default;
+  MainWidget(QWidget* parent = nullptr);
+  ~MainWidget( );
 
 private:
 };

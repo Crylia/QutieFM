@@ -8,11 +8,23 @@
 class FileController : public QObject {
   Q_OBJECT
 public:
-  FileController();
-  ~FileController();
+  FileController( );
+  ~FileController( );
 
 private:
   QThread m_fsThread;
 
-  std::unique_ptr<FileMonitor> m_fmWorker;
+  std::shared_ptr<FileMonitor> m_fmWorker;
+
+private slots:
+
+  void update(const QString path, const FileEvent);
+
+signals:
+  // Start signal to start the function in the thread
+  void operate( );
+  // Stop signal to stop the function in the thread
+  void pause( );
+  // Signal to update the path inside the thread
+  void updatePath(const QString&);
 };
