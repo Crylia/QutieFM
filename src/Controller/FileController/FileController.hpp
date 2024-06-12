@@ -8,8 +8,8 @@
 class FileController : public QObject {
   Q_OBJECT
 public:
-  FileController( );
-  ~FileController( );
+  FileController();
+  ~FileController();
 
 private:
   QThread m_fsThread;
@@ -19,15 +19,19 @@ private:
 private slots:
 
   void update(const std::filesystem::path path, const FileEvent);
-  void emitNewPath(const std::unordered_map<std::filesystem::path, std::filesystem::file_time_type> paths);
+  void newPath(const std::unordered_map<std::filesystem::path,
+                                        std::filesystem::file_time_type>
+                   paths);
 
 signals:
   // Start signal to start the function in the thread
-  void operate( );
+  void operate();
   // Stop signal to stop the function in the thread
-  void pause( );
+  void pause();
   // Signal to update the path inside the thread
-  void updatePath(const std::filesystem::path&);
+  void updatePath(const std::filesystem::path &);
 
-  void newPathEntered(const std::unordered_map<std::filesystem::path, std::filesystem::file_time_type> paths);
+  void pathChanged(const std::unordered_map<std::filesystem::path,
+                                            std::filesystem::file_time_type>
+                       paths);
 };

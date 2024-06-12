@@ -12,23 +12,31 @@ class FileMonitor : public QObject {
 public:
   std::chrono::duration<int, std::milli> m_delay;
 
-  FileMonitor(std::filesystem::path path, std::chrono::duration<int, std::milli> delay);
-  ~FileMonitor( ) = default;
+  FileMonitor(std::filesystem::path path,
+              std::chrono::duration<int, std::milli> delay);
+  ~FileMonitor() = default;
 
-  void SetPath(std::filesystem::path path) { m_path = path; }
+  void SetPath(std::filesystem::path path);
 
 public slots:
-  void start( );
-  void stop( );
+  void start();
+  void stop();
 
 private:
-  std::unordered_map<std::filesystem::path, std::filesystem::file_time_type> m_paths;
+  std::unordered_map<std::filesystem::path, std::filesystem::file_time_type>
+      m_paths;
   bool m_running;
   std::filesystem::path m_path;
 
-  bool contains(const std::filesystem::path& key);
+  bool contains(const std::filesystem::path &key);
+
+  void initPathsMap();
 
 signals:
-  void update(const std::filesystem::path path, const FileEvent);
-  void newPathEntered(const std::unordered_map<std::filesystem::path, std::filesystem::file_time_type> paths);
+  void fileDeleted(const std::filesystem::path path, const FileEvent);
+  void fileCreated(const std::filesystem::path path, const FileEvent);
+  void fileModified(const std::filesystem::path path, const FileEvent);
+  void pathChanged(const std::unordered_map<std::filesystem::path,
+                                            std::filesystem::file_time_type>
+                       paths);
 };
