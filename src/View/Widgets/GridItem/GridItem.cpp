@@ -1,11 +1,12 @@
 #include "GridItem.hpp"
+#include <iostream>
 
 GridItem::GridItem(const std::filesystem::path path, QWidget* parent)
 	: QWidget(parent),
 	m_path(path),
 	m_name(QString::fromStdString(path.filename( ).string( ))),
 	m_icon(getIconForFileType(path)) {
-	widgetSize = QSize(128, 128);
+	widgetSize = QSize(80, 128);
 	setMinimumSize(widgetSize);
 	setMaximumSize(widgetSize);
 
@@ -43,14 +44,26 @@ QString GridItem::formatText(const QString& text) {
 QIcon GridItem::getIconForFileType(const std::filesystem::path path) const {
 	if (!std::filesystem::is_directory(path)) {
 		QIcon icon;
-		QList<QMimeType> mime_types = mime_database.mimeTypesForFileName(QString::fromStdString(path.string( )));
+		auto mdb = new QMimeDatabase( );
+		QMimeType mime_type = mdb->mimeTypeForFile(QString::fromStdString(path.string( )));
+		icon = QIcon::fromTheme(mime_type.iconName( ));
 
-		for (int i = 0; i < mime_types.count( ) && icon.isNull( ); ++i)
-			icon = QIcon::fromTheme(mime_types[i].iconName( ));
+		if (!icon.isNull( )) {
+			QPixmap pixmap = icon.pixmap(QSize(64, 64));
+			icon = QIcon(pixmap);
+		}
 
 		return icon.isNull( ) ? QApplication::style( )->standardIcon(QStyle::SP_FileIcon) : icon;
 	} else {
-		return QIcon::fromTheme("folder");
+
+		auto icon = QIcon::fromTheme("folder");
+
+		if (!icon.isNull( )) {
+			QPixmap pixmap = icon.pixmap(QSize(64, 64));
+			icon = QIcon(pixmap);
+		}
+
+		return icon;
 	}
 }
 

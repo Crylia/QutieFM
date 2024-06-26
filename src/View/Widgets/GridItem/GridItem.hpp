@@ -19,7 +19,6 @@ private:
 	std::filesystem::path m_path;
 
 	QSize widgetSize;
-	QMimeDatabase mime_database;
 
 	QString formatText(const QString& text);
 

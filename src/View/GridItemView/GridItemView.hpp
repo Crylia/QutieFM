@@ -16,6 +16,10 @@ private:
 
 	std::shared_ptr<FileController> fileController;
 
+	//Grid map to keep track of the widgets, and delete them easily as QT doesnt
+	//provide an easy way to find children by a property
+	std::unordered_map<std::filesystem::path, QWidget*> gridMap;
+
 public:
 	GridItemView(QWidget* parent = nullptr);
 	~GridItemView( );

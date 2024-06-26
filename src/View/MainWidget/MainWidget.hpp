@@ -7,6 +7,7 @@
 
 #include "../Widgets/GridItem/GridItem.hpp"
 #include "../GridItemView/GridItemView.hpp"
+#include "../Path/Path.hpp"
 
 class MainWidget : public QWidget {
   Q_OBJECT
