@@ -8,6 +8,7 @@
 #include <QMimeDatabase>
 #include <QApplication>
 #include <filesystem>
+#include <QMouseEvent>
 
 class GridItem : public QWidget {
 	Q_OBJECT
@@ -35,4 +36,8 @@ public:
 
 protected:
 	void paintEvent(QPaintEvent* event)override;
+	void mousePressEvent(QMouseEvent* event) override;
+
+signals:
+	void clicked( );
 };

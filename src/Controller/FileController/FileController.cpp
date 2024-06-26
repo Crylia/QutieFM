@@ -12,7 +12,7 @@ FileController::FileController( ) {
     std::chrono::milliseconds(1000));
 #else
   m_fmWorker = std::make_shared<FileMonitor>(
-    std::filesystem::path("/home/crylia/Dokumente"),
+    std::filesystem::path(std::getenv("HOME")),
     std::chrono::milliseconds(1000));
 #endif
 
@@ -20,11 +20,17 @@ FileController::FileController( ) {
 
   connect(this, &FileController::operate, m_fmWorker.get( ),
     &FileMonitor::start);
-  connect(m_fmWorker.get( ), &FileMonitor::fileHappened, this,
+  connect(m_fmWorker.get( ), &FileMonitor::changed, this,
     &FileController::update);
   connect(m_fmWorker.get( ), &FileMonitor::pathChanged, this,
     &FileController::newPath);
-  connect(this, &FileController::updatePath, m_fmWorker.get( ), &FileMonitor::SetPath);
+
+  //Why this no workie
+  //connect(this, &FileController::updatePath, m_fmWorker.get( ), &FileMonitor::SetPath);
+  connect(this, &FileController::updatePath, this, [this](std::filesystem::path p) {
+    m_fmWorker.get( )->SetPath(p);
+    });
+
 
   m_fsThread.start( );
 
@@ -36,11 +42,8 @@ FileController::~FileController( ) {
   m_fsThread.wait( );
 }
 
-void FileController::newPath(
-  std::unordered_map<std::filesystem::path, std::filesystem::file_time_type>
-  path) {
-  std::cout << "bruh" << std::endl;
-  emit pathChanged(path);
+void FileController::newPath(const std::filesystem::path p) {
+  emit pathChanged(p);
 }
 
 void FileController::update(const std::filesystem::path path,

@@ -14,7 +14,7 @@ private:
 
 	QList<GridItem> m_gridItemList;
 
-	std::shared_ptr<FileController> fileController;
+	FileController* fileController;
 
 	//Grid map to keep track of the widgets, and delete them easily as QT doesnt
 	//provide an easy way to find children by a property

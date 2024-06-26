@@ -5,6 +5,12 @@
 #include <filesystem>
 #include <unordered_map>
 
+#ifdef _WIN32
+#include <windows.h>
+#elif __unix__
+#include <sys/stat.h>
+#endif
+
 enum class FileEvent { created, modified, erased };
 
 class FileMonitor : public QObject {
@@ -32,9 +38,9 @@ private:
 
   void initPathsMap( );
 
+  bool is_hidden(const std::filesystem::path& p);
+
 signals:
-  void fileHappened(const std::filesystem::path path, const FileEvent);
-  void pathChanged(const std::unordered_map<std::filesystem::path,
-    std::filesystem::file_time_type>
-    paths);
+  void changed(const std::filesystem::path path, const FileEvent);
+  void pathChanged(const std::filesystem::path p);
 };

@@ -14,6 +14,4 @@ class MainWidget : public QWidget {
 public:
   MainWidget(QWidget* parent = nullptr);
   ~MainWidget( );
-
-private:
 };

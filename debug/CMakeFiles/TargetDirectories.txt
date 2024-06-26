@@ -1,5 +1,0 @@
-/home/crylia/Dokumente/git/QutieFM/debug/CMakeFiles/QutieFM.dir
-/home/crylia/Dokumente/git/QutieFM/debug/CMakeFiles/edit_cache.dir
-/home/crylia/Dokumente/git/QutieFM/debug/CMakeFiles/rebuild_cache.dir
-/home/crylia/Dokumente/git/QutieFM/debug/CMakeFiles/QutieFM_autogen_timestamp_deps.dir
-/home/crylia/Dokumente/git/QutieFM/debug/CMakeFiles/QutieFM_autogen.dir

@@ -78,3 +78,10 @@ void GridItem::paintEvent(QPaintEvent* event) {
 	style( )->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
 	QWidget::paintEvent(event);
 }
+
+void GridItem::mousePressEvent(QMouseEvent* event) {
+	if (event->button( ) == Qt::LeftButton) {
+		emit clicked( );
+	}
+	QWidget::mousePressEvent(event);
+}
