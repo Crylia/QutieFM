@@ -10,12 +10,12 @@ GridItemView::GridItemView(QWidget* parent)
 
   connect(fileController, &FileController::pathChanged, this,
     [this, mainLayout](const std::filesystem::path path) {
-      while (mainLayout->count( )) {
-        QWidget* widget = mainLayout->itemAt(0)->widget( );
-        if (widget) {
-          mainLayout->removeWidget(widget);
-          delete widget;
-        }
+      // No, QT Does not offer a better way to clear a layout, at least this solution doesnt segfault
+      QLayoutItem* wItem;
+      while ((wItem = mainLayout->takeAt(0)) != 0) {
+        if (wItem->widget( ))
+          wItem->widget( )->setParent(nullptr);
+        delete wItem;
       }
     });
 
@@ -24,6 +24,8 @@ GridItemView::GridItemView(QWidget* parent)
       auto w = new GridItem(path);
       gridMap[path] = w;
       connect(w, &GridItem::clicked, this, [this, path]( ) {
+        if (!std::filesystem::is_directory(path))
+          return;
         emit fileController->updatePath(path);
         });
       int pos = gridMap.size( ) - 1;
