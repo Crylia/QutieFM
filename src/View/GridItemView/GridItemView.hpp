@@ -1,6 +1,8 @@
 #pragma once
 
 #include <QFrame>
+#include <QScrollArea>
+#include <cstdlib>
 
 #include "../Widgets/GridItem/GridItem.hpp"
 #include "../../Controller/FileController/FileController.hpp"

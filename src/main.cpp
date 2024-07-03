@@ -2,13 +2,12 @@
 #include <QApplication>
 #include <memory>
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   QApplication app(argc, argv);
 
-  auto w = std::make_unique<MainWindow>();
+  auto w = std::make_unique<MainWindow>( );
 
-  w->setMinimumHeight(200);
-  w->show();
+  w->show( );
 
-  return app.exec();
+  return app.exec( );
 }

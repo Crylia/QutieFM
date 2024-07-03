@@ -3,22 +3,17 @@
 #include <iostream>
 #include <thread>
 
-FileMonitor::FileMonitor(std::filesystem::path path,
-  std::chrono::duration<int, std::milli> delay)
-  : m_path(path), m_delay(delay) { }
+FileMonitor::FileMonitor(std::chrono::duration<int, std::milli> delay)
+  : m_delay(delay) { }
 
 void FileMonitor::SetPath(std::filesystem::path newPath) {
   m_path = newPath;
-  std::cout << m_path.string( ) << std::endl;
   emit pathChanged(m_path);
   initPathsMap( );
 }
 
 void FileMonitor::initPathsMap( ) {
   m_paths.clear( );
-  /* for (auto& file : std::filesystem::directory_iterator(m_path)) {
-    m_paths[file.path( )] = std::filesystem::last_write_time(file);
-  } */
 }
 
 bool FileMonitor::is_hidden(const std::filesystem::path& p) {

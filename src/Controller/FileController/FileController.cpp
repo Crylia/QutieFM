@@ -6,32 +6,35 @@
 #include <unordered_map>
 
 FileController::FileController( ) {
-#ifdef _WIN32
   m_fmWorker = std::make_shared<FileMonitor>(
-    std::filesystem::path(std::getenv("USERPROFILE")),
     std::chrono::milliseconds(1000));
-#else
-  m_fmWorker = std::make_shared<FileMonitor>(
-    std::filesystem::path(std::getenv("HOME")),
-    std::chrono::milliseconds(1000));
-#endif
-
   m_fmWorker->moveToThread(&m_fsThread);
 
+  // starts the directory monitoring thread, forgot why it has to be a signal, only works this way not with a direct call
   connect(this, &FileController::operate, m_fmWorker.get( ),
     &FileMonitor::start);
+  // main signal to populate the file grid, passes the path and event each time a file is deleted, created or updated
   connect(m_fmWorker.get( ), &FileMonitor::changed, this,
     &FileController::update);
+  // Propagating signal from the monitor that fires when the path is changed
   connect(m_fmWorker.get( ), &FileMonitor::pathChanged, this,
     &FileController::newPath);
-
-  //Why this no workie
-  //connect(this, &FileController::updatePath, m_fmWorker.get( ), &FileMonitor::SetPath);
+#ifdef _WIN32
+  m_fmWorker.get( )->SetPath(std::filesystem::path(std::getenv("USERPROFILE")));
+#else
+  m_fmWorker.get( )->SetPath(std::filesystem::path(std::getenv("HOME")));
+#endif
+  // Signal to update the path, when fired passes the new path and will be given to the monitor
   connect(this, &FileController::updatePath, this, [this](std::filesystem::path p) {
+    previousPaths.push(m_fmWorker.get( )->GetPath( ));
     m_fmWorker.get( )->SetPath(p);
     });
+  connect(this, &FileController::previousPath, this, [this]( ) {
+    if (previousPaths.empty( )) return;
 
-
+    m_fmWorker.get( )->SetPath(previousPaths.top( ));
+    previousPaths.pop( );
+    });
   m_fsThread.start( );
 
   emit operate( );
@@ -39,6 +42,7 @@ FileController::FileController( ) {
 
 FileController::~FileController( ) {
   m_fsThread.quit( );
+  m_fmWorker.get( )->stop( );
   m_fsThread.wait( );
 }
 

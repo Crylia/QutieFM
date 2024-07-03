@@ -4,6 +4,9 @@
 #include <memory>
 #include <unordered_map>
 #include <filesystem>
+#include <QApplication>
+#include <stack>
+
 #include "../../Core/FileMonitor/FileMonitor.hpp"
 
 class FileController : public QObject {
@@ -18,6 +21,8 @@ public:
   // Deleting the copy constructor and assignment operator to prevent copying
   FileController(const FileController&) = delete;
   FileController& operator=(const FileController&) = delete;
+
+  std::stack<std::filesystem::path> previousPaths;
 
 private:
   // Private constructor to prevent instantiation
@@ -42,4 +47,5 @@ signals:
 
   void pathChanged(const std::filesystem::path p);
   void contentChanged(std::filesystem::path path, FileEvent event);
+  void previousPath( );
 };

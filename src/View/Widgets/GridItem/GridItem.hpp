@@ -21,7 +21,7 @@ private:
 
 	QSize widgetSize;
 
-	QString formatText(const QString& text);
+	void formatText(const QString& text);
 
 	QIcon getIconForFileType(const std::filesystem::path path) const;
 
@@ -35,9 +35,13 @@ public:
 	void setIconSize(const QSize& size);
 
 protected:
-	void paintEvent(QPaintEvent* event)override;
+	void paintEvent(QPaintEvent* event) override;
 	void mousePressEvent(QMouseEvent* event) override;
+	void mouseDoubleClickEvent(QMouseEvent*) override;
+	void enterEvent(QEnterEvent* event) override;
+	void leaveEvent(QEvent* event) override;
 
 signals:
 	void clicked( );
+	void doubleClicked( );
 };

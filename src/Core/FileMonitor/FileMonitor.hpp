@@ -18,20 +18,23 @@ class FileMonitor : public QObject {
 public:
   std::chrono::duration<int, std::milli> m_delay;
 
-  FileMonitor(std::filesystem::path path,
-    std::chrono::duration<int, std::milli> delay);
+  FileMonitor(std::chrono::duration<int, std::milli> delay);
   ~FileMonitor( ) = default;
 
   void SetPath(std::filesystem::path path);
+  std::filesystem::path GetPath( ) {
+    return m_path;
+  }
+
+  void stop( );
 
 public slots:
   void start( );
-  void stop( );
 
 private:
   std::unordered_map<std::filesystem::path, std::filesystem::file_time_type>
     m_paths;
-  bool m_running;
+  bool m_running = true;
   std::filesystem::path m_path;
 
   bool contains(const std::filesystem::path& key);

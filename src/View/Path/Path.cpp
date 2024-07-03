@@ -18,10 +18,10 @@ Path::Path(QWidget* parent)
 		border: 2px solid #414141;
 		border-radius: 6px;
 		color: #D8D8D8;
-		font-size: 20px;
+		font-size: 22px;
 	)");
 
-	setFixedHeight(40);
+	setFixedHeight(48);
 
 	connect(m_fileController, &FileController::pathChanged, this,
 		[this](const std::filesystem::path path) {

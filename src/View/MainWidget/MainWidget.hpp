@@ -4,6 +4,7 @@
 #include <QLabel>
 #include <QWidget>
 #include <QGridLayout>
+#include <QPushButton>
 
 #include "../Widgets/GridItem/GridItem.hpp"
 #include "../GridItemView/GridItemView.hpp"
