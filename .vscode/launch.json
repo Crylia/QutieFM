@@ -1,0 +1,25 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "cppdbg",
+      "request": "launch",
+      "args": [],
+      "stopAtEntry": false,
+      "externalConsole": false,
+      "cwd": "/home/crylia/Dokumente/git/QutieFM_ref",
+      "program": "/home/crylia/Dokumente/git/QutieFM_ref/build/Debug/outDebug",
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "visualizerFile": "/home/crylia/.config/Code/User/workspaceStorage/086fea89ac5a7d8a91ed9ed2242bec2f/tonka3000.qtvsctools/qt.natvis.xml"
+    }
+  ]
+}

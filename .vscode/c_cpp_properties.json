@@ -1,13 +1,23 @@
 {
     "configurations": [
         {
-            "name": "Linux",
+            "name": "linux-gcc-x64",
             "includePath": [
-                "${default}"
+                "${workspaceFolder}/**",
+                "${default}",
+                "/usr/include/**"
             ],
-            "defines": [],
-            "compilerPath": "/usr/bin/clang",
-            "intelliSenseMode": "linux-clang-x64"
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c99",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "linux-gcc-x64",
+            "compilerArgs": [
+                ""
+            ],
+            "configurationProvider": "ms-vscode.cmake-tools",
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true
+            }
         }
     ],
     "version": 4
